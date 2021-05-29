@@ -155,24 +155,3 @@ impl Request {
         }
     }
 }
-
-#[derive(Debug, PartialEq)]
-pub enum Response<'a> {
-    Ok(&'a str),
-    Err(Error<'a>),
-}
-
-impl Response<'_> {
-    pub fn code(&self) -> u8 {
-        match self {
-            Self::Ok(_) => 0,
-            Self::Err(_) => 1,
-        }
-    }
-}
-
-impl fmt::Display for Response<'_> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "status: {}; {:?}", self.code(), self)
-    }
-}
