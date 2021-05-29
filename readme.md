@@ -41,10 +41,10 @@ There're two response types:
 -	Ok: status code 0.
 -	Err: status code 1.
 
-Response format is SON.
+The response format is `CODE:MSG`, where
+-	CODE: the status code
+-	MSG: the message string
 
 ## Sample Response
 
-```JSON
-{"status": 0, "msg": "fan set to 100%"}
-```
+`0:voltage set to 3.3v`
