@@ -40,6 +40,7 @@ pub enum Request {
 
 #[derive(Debug, PartialEq)]
 pub enum GetRequest {
+    All,
     Config,
     Percentage,
     Temperature,
@@ -50,6 +51,7 @@ impl GetRequest {
     fn parse(val: &[u8]) -> Result<Self> {
         use GetRequest::*;
         Ok(match val {
+            b"all" => All,
             b"%" => Percentage,
             b"cfg" => Config,
             b"volt" => Voltage,
@@ -60,6 +62,7 @@ impl GetRequest {
 
     pub fn val_str(&self) -> &'static str {
         match self {
+            Self::All => "all",
             Self::Voltage => "volt",
             Self::Config => "cfg",
             Self::Temperature => "temp",

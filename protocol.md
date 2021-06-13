@@ -12,6 +12,7 @@ GET volt # get current voltage in millivolts
 get cfg # get if manual or auto
 GET temp # get temperature in celcius
 GET % # get speed percentage
+GET all # get all possible readings
 ```
 
 # Encoding
