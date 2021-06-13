@@ -57,6 +57,15 @@ impl GetRequest {
             _ => return Err(InvalidValue),
         })
     }
+
+    pub fn val_str(&self) -> &'static str {
+        match self {
+            Self::Voltage => "volt",
+            Self::Config => "cfg",
+            Self::Temperature => "temp",
+            Self::Percentage => "%",
+        }
+    }
 }
 
 #[derive(Debug, PartialEq)]
@@ -148,6 +157,37 @@ impl Request {
                 b"GET" | b"SET" | b"ADJ" => Err(MissingValue),
                 b"" => Err(Empty),
                 _ => Err(UnknownRequestType),
+            }
+        }
+    }
+
+    pub fn method(&self) -> &'static str {
+        match self {
+            Self::Get(_) => "GET",
+            Self::Set(_) => "SET",
+            Self::Adj(_) => "ADJ",
+        }
+    }
+}
+
+impl fmt::Display for Request {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Self::Get(r) => write!(f, "GET {}", r.val_str()),
+            Self::Set(r) => {
+                use SetRequest::*;
+                match r {
+                    Voltage(v) => write!(f, "SET v{}", v),
+                    Percentage(v) => write!(f, "SET %{}", v),
+                    Auto => write!(f, "SET a"),
+                }
+            }
+            Self::Adj(r) => {
+                use AdjRequest::*;
+                match r {
+                    Voltage(v) => write!(f, "ADJ v{}", v),
+                    Percentage(v) => write!(f, "ADJ %{}", v),
+                }
             }
         }
     }
