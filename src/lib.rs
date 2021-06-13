@@ -3,22 +3,20 @@
 #[cfg(test)]
 mod tests;
 
-use core::fmt;
-use core::str;
+use core::{fmt, str};
 use Error::*;
 
-type Result<'a, T> = core::result::Result<T, Error<'a>>;
+type Result<T> = core::result::Result<T, Error>;
 
 #[derive(Debug, PartialEq)]
-pub enum Error<'a> {
+pub enum Error {
     UnknownRequestType,
     InvalidValue,
     MissingValue,
     Empty,
-    Hardware(&'a str),
 }
 
-impl fmt::Display for Error<'_> {
+impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
@@ -28,7 +26,6 @@ impl fmt::Display for Error<'_> {
                 Self::UnknownRequestType => "unknown request type",
                 Self::InvalidValue => "invalid value",
                 Self::MissingValue => "missing value",
-                Self::Hardware(s) => s,
             }
         )
     }
