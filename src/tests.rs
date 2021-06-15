@@ -116,3 +116,25 @@ fn parse_request() {
         assert_eq!(Request::parse(s.as_bytes()), Err(e));
     }
 }
+
+/// Test to see if marshaling and unmarshaling is reflexive.
+#[test]
+fn marshal_unmarshal() {
+    use Request::*;
+    let tests = &[
+        Get(GetRequest::All),
+        Get(GetRequest::Config),
+        Get(GetRequest::Voltage),
+        Get(GetRequest::Temperature),
+        Get(GetRequest::Percentage),
+        Set(SetRequest::Auto),
+        Set(SetRequest::Voltage(255u16)),
+        Set(SetRequest::Percentage(25u8)),
+        Adj(AdjRequest::Percentage(-25i8)),
+        Adj(AdjRequest::Voltage(-150i16)),
+    ];
+
+    for r in tests {
+        assert_eq!(Ok(r), Request::parse(format!("{}", r).as_bytes()).as_ref(),)
+    }
+}
