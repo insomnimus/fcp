@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use fcp::{Request, AdjRequest, GetRequest, SetRequest};
+//! use fancp::{Request, AdjRequest, GetRequest, SetRequest};
 //!
 //! // Imagine we have an incoming fcp request
 //! // over some connection. We can parse the request like this.
@@ -105,7 +105,7 @@ impl Request {
     /// # Examples
     ///
     /// ```
-    /// use fcp::{Request, SetRequest};
+    /// use fancp::{Request, SetRequest};
     /// let req = b"SET %25";
     /// assert_eq!(Ok(Request::Set(SetRequest::Percentage(25))), Request::parse(req));
     /// ```
@@ -136,7 +136,7 @@ impl Request {
     /// # Examples
     ///
     /// ```
-    /// use fcp::{Request, GetRequest};
+    /// use fancp::{Request, GetRequest};
     /// let req = Request::Get(GetRequest::Config);
     /// assert_eq!("GET", req.method());
     /// ```

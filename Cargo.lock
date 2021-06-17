@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "fcp"
+name = "fancp"
 version = "0.4.2"

@@ -1,5 +1,5 @@
 [package]
-name = "fcp"
+name = "fancp"
 version = "0.4.2"
 edition = "2018"
 license = "MIT"
