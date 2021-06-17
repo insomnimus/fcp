@@ -1,6 +1,18 @@
 [package]
 name = "fcp"
-version = "0.4.1"
+version = "0.4.2"
 edition = "2018"
+license = "MIT"
+authors = ["Taylan Gökkaya <github.com/insomnimus>"]
+description = "Types and methods for parsing/ creating Fan Control Protocol messages."
+readme = "readme.md"
+homepage = "https://github.com/insomnimus/fcp"
+repository = "https://github.com/insomnimus/fcp"
+keywords = [
+  "no_std", "protocol", "peripheral", "raspberry-pi",
+]
+categories = [
+  "embedded", "no-std", "network-programming", "parsing",
+]
 
 [dependencies]
