@@ -7,7 +7,7 @@
 //!
 //! // Imagine we have an incoming fcp request
 //! // over some connection. We can parse the request like this.
-//! let req= b"GET all"; // the bytes we received over the connection
+//! let req= "GET all"; // the bytes we received over the connection
 //! let req = Request::parse(req).unwrap();
 //! assert_eq!(Request::Get(GetRequest::All), req);
 //!
@@ -99,33 +99,32 @@ impl Request {
     /// Tries to parse a slice of bytes into a Request.
     ///
     /// # Errors
-    /// `parse` will error if the given byte slice doesn't contain valid ASCII or
-    /// the byte slice is not a valid FCP request.
+    /// `parse` will error if the string is not a valid FCP request.
     ///
     /// # Examples
     ///
     /// ```
     /// use fancp::{Request, SetRequest};
-    /// let req = b"SET %25";
+    /// let req = "SET %25";
     /// assert_eq!(Ok(Request::Set(SetRequest::Percentage(25))), Request::parse(req));
     /// ```
-    pub fn parse(s: &[u8]) -> Result<Self> {
-        let mut split = s.splitn(2, |b| *b == b' ');
+    pub fn parse(s: &str) -> Result<Self> {
+        let mut split = s.split_ascii_whitespace();
         let method = match split.next() {
             None => return Err(Empty),
             Some(x) => x,
         };
         if let Some(val) = split.next() {
             match method {
-                b"GET" => GetRequest::parse(val).map(Self::Get),
-                b"SET" => SetRequest::parse(val).map(Self::Set),
-                b"ADJ" => AdjRequest::parse(val).map(Self::Adj),
+                "GET" => GetRequest::parse(val.as_bytes()).map(Self::Get),
+                "SET" => SetRequest::parse(val.as_bytes()).map(Self::Set),
+                "ADJ" => AdjRequest::parse(val.as_bytes()).map(Self::Adj),
                 _ => Err(UnknownRequestType),
             }
         } else {
             match method {
-                b"GET" | b"SET" | b"ADJ" => Err(MissingValue),
-                b"" => Err(Empty),
+                "GET" | "SET" | "ADJ" => Err(MissingValue),
+                "" => Err(Empty),
                 _ => Err(UnknownRequestType),
             }
         }
@@ -152,7 +151,7 @@ impl Request {
 impl FromStr for Request {
     type Err = Error;
     fn from_str(s: &str) -> Result<Self> {
-        Self::parse(s.as_bytes())
+        Self::parse(s)
     }
 }
 

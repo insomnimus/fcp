@@ -75,7 +75,7 @@ fn parse_request() {
         ];
 
         for (s, e) in must_ok {
-            assert_eq!(Request::parse(s.as_bytes()), Ok(Get(e)));
+            assert_eq!(Request::parse(s), Ok(Get(e)));
         }
     }
     {
@@ -88,7 +88,7 @@ fn parse_request() {
         ];
 
         for (s, e) in must_ok {
-            assert_eq!(Request::parse(s.as_bytes()), Ok(Set(e)));
+            assert_eq!(Request::parse(s), Ok(Set(e)));
         }
     }
     {
@@ -100,7 +100,7 @@ fn parse_request() {
         ];
 
         for (s, e) in must_ok {
-            assert_eq!(Request::parse(s.as_bytes()), Ok(Adj(e)));
+            assert_eq!(Request::parse(s), Ok(Adj(e)));
         }
     }
 
@@ -113,7 +113,7 @@ fn parse_request() {
     ];
 
     for (s, e) in must_err {
-        assert_eq!(Request::parse(s.as_bytes()), Err(e));
+        assert_eq!(Request::parse(s), Err(e));
     }
 }
 
@@ -135,6 +135,6 @@ fn marshal_unmarshal() {
     ];
 
     for r in tests {
-        assert_eq!(Ok(r), Request::parse(format!("{}", r).as_bytes()).as_ref(),)
+        assert_eq!(Ok(r), Request::parse(&format!("{}", r)).as_ref(),)
     }
 }

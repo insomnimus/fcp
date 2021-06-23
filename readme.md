@@ -1,3 +1,5 @@
+[crates.io](https://crates.io/crates/fancp)
+
 # Fan Control Protocol (FCP)
 
 A tiny protocol to transmit fan control messages.

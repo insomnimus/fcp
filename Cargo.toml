@@ -1,6 +1,6 @@
 [package]
 name = "fancp"
-version = "0.4.2"
+version = "0.6.0"
 edition = "2018"
 license = "MIT"
 authors = ["Taylan Gökkaya <github.com/insomnimus>"]
